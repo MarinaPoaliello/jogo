@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Julgamento ou Observação</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      max-width: 600px;
+      width: 90%;
+    }
+    .container h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .container p {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .julgamento { background-color: #ff6b6b; color: white; }
+    .observacao { background-color: #4ecdc4; color: white; }
+    .resultado {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Julgamento ou Observação?</h2>
+    <p id="frase"></p>
+    <div>
+      <button class="julgamento" onclick="verificar('julgamento')">Julgamento</button>
+      <button class="observacao" onclick="verificar('observação')">Observação</button>
+    </div>
+    <p id="resultado" class="resultado"></p>
+  </div>
+
+  <script>
+    const frases = [
+      { texto: "Ele foi um grosso", tipo: "julgamento" },
+      { texto: "Ele se atrasou nas últimas 3 reuniões", tipo: "observação" },
+      { texto: "Você nunca me escuta", tipo: "julgamento" },
+      { texto: "Ela não veio nas últimas 2 reuniões", tipo: "observação" },
+      { texto: "Você é um folgado", tipo: "julgamento" }
+    ];
+
+    let index = 0;
+    let acertos = 0;
+
+    const fraseEl = document.getElementById('frase');
+    const resultadoEl = document.getElementById('resultado');
+
+    function mostrarFrase() {
+      fraseEl.textContent = `"${frases[index].texto}"`;
+    }
+
+    function verificar(resposta) {
+      const correta = resposta === frases[index].tipo;
+      resultadoEl.textContent = correta ? '✅ Acertou!' : '❌ Errou!';
+      if (correta) acertos++;
+
+      setTimeout(() => {
+        resultadoEl.textContent = '';
+        if (index < frases.length - 1) {
+          index++;
+          mostrarFrase();
+        } else {
+          alert(`Fim do jogo! Você acertou ${acertos} de ${frases.length}.`);
+          index = 0;
+          acertos = 0;
+          mostrarFrase();
+        }
+      }, 1000);
+    }
+
+    mostrarFrase();
+  </script>
+</body>
+</html>
